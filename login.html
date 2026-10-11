@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - AuthGuard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <span class="logo-text">AuthGuard</span>
+            </a>
+            <nav class="nav-links">
+                <a href="login.html" class="nav-link active">Login</a>
+                <a href="register.html" class="btn btn-sm btn-primary">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <div class="flash-messages" id="alertContainer"></div>
+
+        <div class="auth-card-container">
+            <div class="auth-card glassmorphism">
+                <div class="auth-header">
+                    <div class="auth-icon-badge">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your secure account dashboard</p>
+                </div>
+
+                <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input type="email" id="email" class="form-control" placeholder="name@example.com" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-key input-icon"></i>
+                            <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password', this)" title="Toggle password visibility">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
+                        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="register.html" class="auth-link">Create an account</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 AuthGuard Security. Real Persistent Database &amp; Netlify Hosting.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Redirect if already logged in
+        redirectIfLoggedIn();
+
+        // Handle Login Submission
+        async function handleLogin(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                showAlert('Please fill in both Email and Password fields.', 'danger');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                // Verify credentials against real persistent database
+                const user = await authenticateUser(email, password);
+                
+                // Store active authenticated session
+                setSessionUser(user);
+                setFlashMessage(`Welcome back, ${user.fullName}!`, 'success');
+                
+                // Redirect to protected dashboard
+                window.location.replace('dashboard.html');
+            } catch (err) {
+                showAlert(err.message || 'Invalid email or password.', 'danger');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
+            }
+        }
+    </script>
+</body>
+</html>

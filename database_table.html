@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthGuard - ANU Lab 2 Database Tables</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0b0f19;
+            color: #f8fafc;
+            margin: 0;
+            padding: 2.5rem 1.5rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(21, 30, 49, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        h1 {
+            margin-top: 0;
+            color: #818cf8;
+            font-size: 1.8rem;
+        }
+        h2 {
+            color: #cbd5e1;
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            text-align: left;
+        }
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.9rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        td {
+            padding: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .badge {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        .due-tag {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93c5fd;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .hash {
+            background: rgba(0, 0, 0, 0.4);
+            color: #a78bfa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            display: block;
+            word-break: break-all;
+            max-width: 250px;
+        }
+        .footer {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Alexandria National University - Lab 2 Database Viewer</h1>
+        <p style="color: #94a3b8;">Database File: <code>C:\Users\Arabtech\.gemini\antigravity\scratch\auth_app\users.db</code> &bull; Relational SQLite with Foreign Keys</p>
+
+        <!-- Table 1: Users -->
+        <h2>
+            <span>Table 1: <code>users</code> (6 records)</span>
+            <span class="badge">Primary Key: id</span>
+        </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Password Hash</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+    <tr>
+        <td><span class="badge">#1</span></td>
+        <td><strong>Jane Doe</strong></td>
+        <td><a href="mailto:jane@example.com" style="color: #60a5fa;">jane@example.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$Re5wyR4IjqZTfWOp$8c6abca4a424afffd0c316c74ee8b268456c68428d654f545be1a4b8d2c09637</code></td>
+        <td style="color: #94a3b8;">2026-10-08 16:34:27</td>
+    </tr>
+    
+    <tr>
+        <td><span class="badge">#2</span></td>
+        <td><strong>mohamed roushdy</strong></td>
+        <td><a href="mailto:mohamedroushdy903@gmail.com" style="color: #60a5fa;">mohamedroushdy903@gmail.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$RY1BVZBs261xtKxT$f71676a43a5284bb06075462fcc8c7159e432839c16c94125e87d1d9fb61fd88</code></td>
+        <td style="color: #94a3b8;">2026-10-10 00:29:09</td>
+    </tr>
+    
+    <tr>
+        <td><span class="badge">#3</span></td>
+        <td><strong>ahmed</strong></td>
+        <td><a href="mailto:mohamedroushdy905@gmail.com" style="color: #60a5fa;">mohamedroushdy905@gmail.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$KdQN8XxoiOAx2HjB$b2049c1fe4a1cf85afe988f3d79fca60c960a55ad6a111f0eb6e783e6e347802</code></td>
+        <td style="color: #94a3b8;">2026-10-10 00:54:22</td>
+    </tr>
+    
+    <tr>
+        <td><span class="badge">#4</span></td>
+        <td><strong>Alice Smith</strong></td>
+        <td><a href="mailto:alice@example.com" style="color: #60a5fa;">alice@example.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$fi6vbRfocJVETmUT$664bf138e155790c810a36d8a176ddd8d1f887ae24cce77907ab2c81efd41e3f</code></td>
+        <td style="color: #94a3b8;">2026-10-10 01:06:53</td>
+    </tr>
+    
+    <tr>
+        <td><span class="badge">#6</span></td>
+        <td><strong>Bob User</strong></td>
+        <td><a href="mailto:bob@example.com" style="color: #60a5fa;">bob@example.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$pQwi4ioVrfcojpwe$2e1c0b1e13016e6f916da7646c0136aecdf5d5ca3a616d71936f47a396d59047</code></td>
+        <td style="color: #94a3b8;">2026-10-10 01:06:55</td>
+    </tr>
+    
+    <tr>
+        <td><span class="badge">#7</span></td>
+        <td><strong>Charlie User</strong></td>
+        <td><a href="mailto:charlie@example.com" style="color: #60a5fa;">charlie@example.com</a></td>
+        <td><code class="hash">pbkdf2:sha256:1000000$k5dyooLn18bQHht9$e7c1da17501e8753dde27bd38e14f88973e706ddbf6e48bcf1a515d8348647d3</code></td>
+        <td style="color: #94a3b8;">2026-10-10 01:06:55</td>
+    </tr>
+    
+            </tbody>
+        </table>
+
+        <!-- Table 2: Todos -->
+        <h2>
+            <span>Table 2: <code>todos</code> (0 records)</span>
+            <span class="badge" style="background: rgba(16,185,129,0.2); color: #6ee7b7;">FK: user_id ➔ users(id) ON DELETE CASCADE</span>
+        </h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Foreign Key (Author)</th>
+                    <th>Task Title &amp; Description</th>
+                    <th>Due Date (Bonus)</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan='6' style='text-align: center; padding: 1.5rem; color: #94a3b8;'>No to-do tasks added yet.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="footer">
+            Alexandria National University &bull; Faculty of Engineering &bull; Database Systems Lab 2
+        </div>
+    </div>
+</body>
+</html>

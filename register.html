@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - AuthGuard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <span class="logo-text">AuthGuard</span>
+            </a>
+            <nav class="nav-links">
+                <a href="login.html" class="nav-link">Login</a>
+                <a href="register.html" class="btn btn-sm btn-primary active">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <div class="flash-messages" id="alertContainer"></div>
+
+        <div class="auth-card-container">
+            <div class="auth-card glassmorphism">
+                <div class="auth-header">
+                    <div class="auth-icon-badge">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <h2>Create an Account</h2>
+                    <p>Join AuthGuard to manage your profile securely</p>
+                </div>
+
+                <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user input-icon"></i>
+                            <input type="text" id="fullName" class="form-control" placeholder="John Doe" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-key input-icon"></i>
+                            <input type="password" id="password" class="form-control" placeholder="At least 6 characters" minlength="6" required oninput="checkPasswordMatch(); updatePasswordStrength();">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('password', this)" title="Toggle password visibility">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="strength-meter" id="strengthMeter">
+                            <div class="strength-bar" id="strengthBar"></div>
+                        </div>
+                        <small class="form-hint" id="strengthText">Password must be at least 6 characters</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-shield-cat input-icon"></i>
+                            <input type="password" id="confirm_password" class="form-control" placeholder="Re-enter your password" required oninput="checkPasswordMatch()">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirm_password', this)" title="Toggle password visibility">
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                        <small class="form-hint match-hint" id="matchHint"></small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="submitBtn">
+                        <i class="fa-solid fa-user-check"></i> Register Account
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html" class="auth-link">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 AuthGuard Security. Real Persistent Database &amp; Netlify Hosting.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Redirect if already logged in
+        redirectIfLoggedIn();
+
+        // Handle Registration Submission
+        async function handleRegister(event) {
+            event.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            // Form validations
+            if (!fullName || !email || !password || !confirmPassword) {
+                showAlert('Please fill in all required fields.', 'danger');
+                return;
+            }
+
+            const emailRegex = /^[\w\.-]+@[\w\.-]+\.\w+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('Please enter a valid email address.', 'danger');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters long.', 'danger');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match. Please verify both password fields.', 'danger');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+
+            try {
+                // Register to persistent IndexedDB with SHA-256 cryptographic hashing
+                await registerUser({ fullName, email, password });
+                
+                // Set flash message and redirect to login
+                setFlashMessage('Registration successful! You can now log in.', 'success');
+                window.location.replace('login.html');
+            } catch (err) {
+                showAlert(err.message || 'Registration failed.', 'danger');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-user-check"></i> Register Account';
+            }
+        }
+    </script>
+</body>
+</html>

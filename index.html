@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthGuard - Secure Authentication System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        // Automatic session check and immediate redirection
+        const user = sessionStorage.getItem('authguard_active_user');
+        if (user) {
+            window.location.replace('dashboard.html');
+        } else {
+            window.location.replace('login.html');
+        }
+    </script>
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <div class="auth-card-container" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="auth-card glassmorphism" style="text-align: center;">
+            <div class="auth-icon-badge">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2>AuthGuard Portal</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Loading secure environment...</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="login.html" class="btn btn-primary">Go to Login</a>
+                <a href="register.html" class="btn btn-outline-danger" style="border-color: var(--primary); color: #fff;">Register</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

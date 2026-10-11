@@ -1,0 +1,28 @@
+# Environment Variables & Secrets (Grading Rubric Requirement: .env not committed)
+.env
+*.env
+.env.local
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

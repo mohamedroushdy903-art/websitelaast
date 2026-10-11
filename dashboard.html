@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AuthGuard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-shield-halved logo-icon"></i>
+                <span class="logo-text">AuthGuard</span>
+            </a>
+            <nav class="nav-links">
+                <span class="nav-user" id="navUserName"><i class="fa-solid fa-circle-user"></i> User</span>
+                <button type="button" onclick="logout()" class="btn btn-sm btn-outline-danger">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+        <div class="flash-messages" id="alertContainer"></div>
+
+        <div class="dashboard-container">
+            <div class="dashboard-header glassmorphism">
+                <div class="welcome-section">
+                    <div class="avatar-circle" id="userAvatar">
+                        <span>U</span>
+                    </div>
+                    <div class="welcome-text">
+                        <h1 id="welcomeTitle">Welcome back!</h1>
+                        <p>You have successfully authenticated into your secure dashboard.</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button type="button" onclick="logout()" class="btn btn-danger">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Account Details Card -->
+                <div class="card glassmorphism">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-id-card"></i> Account Information</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-row">
+                            <span class="info-label"><i class="fa-solid fa-hashtag"></i> User ID:</span>
+                            <span class="info-value badge-pill" id="userIdVal">#--</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fa-solid fa-user"></i> Full Name:</span>
+                            <span class="info-value" id="userNameVal">--</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fa-solid fa-envelope"></i> Email:</span>
+                            <span class="info-value" id="userEmailVal">--</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fa-solid fa-calendar-check"></i> Account Created:</span>
+                            <span class="info-value" id="userCreatedVal">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Database Status Card -->
+                <div class="card glassmorphism">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Security Status</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="status-item">
+                            <i class="fa-solid fa-circle-check status-icon success"></i>
+                            <div>
+                                <strong>Persistent Database</strong>
+                                <p>User record permanently saved in persistent IndexedDB engine.</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <i class="fa-solid fa-lock status-icon success"></i>
+                            <div>
+                                <strong>Cryptographic Hashing</strong>
+                                <p>SHA-256 with cryptographic salt verified.</p>
+                            </div>
+                        </div>
+                        <div class="status-item">
+                            <i class="fa-solid fa-user-shield status-icon success"></i>
+                            <div>
+                                <strong>Protected Session Active</strong>
+                                <p>Authenticated route guarded by session token validation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 AuthGuard Security. Real Persistent Database &amp; Netlify Hosting.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Guard protected dashboard: kick out unauthenticated visitors
+        const user = requireAuth();
+
+        if (user) {
+            // Populate user interface with live session data
+            document.getElementById('navUserName').innerHTML = `<i class="fa-solid fa-circle-user"></i> ${user.fullName}`;
+            document.getElementById('welcomeTitle').textContent = `Welcome back, ${user.fullName}!`;
+            document.getElementById('userAvatar').innerHTML = `<span>${(user.fullName[0] || 'U').toUpperCase()}</span>`;
+            document.getElementById('userIdVal').textContent = `#${user.id}`;
+            document.getElementById('userNameVal').textContent = user.fullName;
+            document.getElementById('userEmailVal').textContent = user.email;
+            document.getElementById('userCreatedVal').textContent = user.createdAt;
+        }
+    </script>
+</body>
+</html>
