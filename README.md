@@ -140,7 +140,7 @@ Privacy isolation is enforced at two distinct layers:
    - **Editing / Deleting / Toggling:** `UPDATE todos SET ... WHERE id = ? AND user_id = ?` and `DELETE FROM todos WHERE id = ? AND user_id = ?`. Even if an attacker guesses another user's task ID, the query will affect 0 rows because `user_id` does not match the active session.
 3. **Role-Based Access Control (Admin Guard):** Sensitive administrative routes (`/admin`, `/users`) are protected by `@admin_required`, ensuring non-admin users cannot inspect other accounts.
 
----
+---and instead of 4 screen shoots there is a google drive link video how the website works and the feuters of the website https://drive.google.com/drive/folders/1yiVVjfLomftGjZDKc_x17Uh9zZ-xWIjK?dmr=1&ec=wgc-drive-%5Bmodule%5D-goto
 
 ## 👥 Team Contributions
 - **Database Architecture & Schema Design:** Implementation of `database/schema.sql`, relational constraints, and `ON DELETE CASCADE`.
